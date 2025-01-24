@@ -23,43 +23,81 @@
                     placeholder="senha"
                 />
             </div>
-
+            <!-- <div v-if="errorLogin" class="alert alert-danger" role="alert">
+        {{ errorLogin }}
+    </div> -->
             <div class="form-group-inline">
                 <input type="checkbox" name="remember" id="rem" />
-                <label for="rem">Lembre-me</label>
+                <label for="rem">Lembre-Me</label>
             </div>
 
             <div class="form-group">
-                <button @click="sendLoginEmail">Entrar</button>
+                <button type="button" @click="sendLoginEmail">Entrar</button>
             </div>
 
             <div>
                 <p>
                     Novo aqui?
-                    <RouterLink to="/person-add">cadastre-se</RouterLink>
+                    <RouterLink to="/person-add">Cadastre-se</RouterLink>
                 </p>
                 <p>
                     <router-link to="/person-recovery"
-                        >esqueceu a senha?</router-link
+                        >Esqueceu a Senha?</router-link
                     >
                 </p>
             </div>
+            <div class="form-group">
+                <button type="button" @click="sendLoginGoogle()">Google</button>
+            </div>
         </form>
     </section>
+    <div v-if="errorLogin" class="alert alert-danger" role="alert">
+        {{ errorLogin }}
+    </div>
 </template>
 
 <script setup lang="ts">
 import { authService } from "@/core/service/auth.service";
+import router from "@/router";
 import { ref } from "vue";
 
 const email = ref("");
 const senha = ref("");
+const errorLogin = ref("");
 
 function sendLoginEmail() {
-    authService.loginEmail(email.value, senha.value);
+    authService
+    .loginEmail(email.value, senha.value)
+    .then(res => {
+        router.push("/");
+    })
+    .catch(error => {
+        errorLogin.value = error;
+
+    });
 }
+
+function sendLoginGoogle() {
+    authService
+    .loginGoogle()
+    .then(res => {
+        router.push("/");
+    })
+    .catch(error => {
+        errorLogin.value = error;
+
+    });
+}
+
 </script>
 
 <style scoped>
 @import "@/assets/css/login.css";
+.alert.alert-danger {
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    width: 50%;
+    transform: translatex(-50%);
+}
 </style>
