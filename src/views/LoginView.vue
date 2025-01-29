@@ -15,42 +15,33 @@
 
             <div class="form-group">
                 <label for="password">Senha</label>
-                <input
-                    type="password"
-                    name="password"
-                    id="password"
-                    v-model="senha"
-                    placeholder="senha"
-                />
+                <input type="password" name="password" id="password" v-model="senha" placeholder="senha"/>
             </div>
             <!-- <div v-if="errorLogin" class="alert alert-danger" role="alert">
         {{ errorLogin }}
     </div> -->
             <div class="form-group-inline">
-                <input type="checkbox" name="remember" id="rem" />
+                <input type="checkbox" name="remember" id="rem"/>
                 <label for="rem">Lembre-Me</label>
             </div>
 
             <div class="form-group">
                 <button type="button" @click="sendLoginEmail">Entrar</button>
             </div>
-
+            <div class="form-group google">
+                <button type="button" @click="sendLoginGoogle()">Google</button>
+            </div>
             <div>
                 <p>
-                    Novo aqui?
-                    <RouterLink to="/person-add">Cadastre-se</RouterLink>
+                    <router-link to="/person-recovery"> Esqueceu a Senha?</router-link>
                 </p>
                 <p>
-                    <router-link to="/person-recovery"
-                        >Esqueceu a Senha?</router-link
-                    >
+                    <RouterLink to="/person-add"> Cadastre-se: </RouterLink>
                 </p>
-            </div>
-            <div class="form-group">
-                <button type="button" @click="sendLoginGoogle()">Google</button>
             </div>
         </form>
     </section>
+
     <div v-if="errorLogin" class="alert alert-danger" role="alert">
         {{ errorLogin }}
     </div>
@@ -67,28 +58,25 @@ const errorLogin = ref("");
 
 function sendLoginEmail() {
     authService
-    .loginEmail(email.value, senha.value)
-    .then(res => {
-        router.push("/");
-    })
-    .catch(error => {
-        errorLogin.value = error;
-
-    });
+        .loginEmail(email.value, senha.value)
+        .then(res => {
+            router.push("/");
+        })
+        .catch(error => {
+            errorLogin.value = error;
+        });
 }
 
 function sendLoginGoogle() {
     authService
-    .loginGoogle()
-    .then(res => {
-        router.push("/");
-    })
-    .catch(error => {
-        errorLogin.value = error;
-
-    });
+        .loginGoogle()
+        .then(res => {
+            router.push("/");
+        })
+        .catch(error => {
+            errorLogin.value = error;
+        });
 }
-
 </script>
 
 <style scoped>

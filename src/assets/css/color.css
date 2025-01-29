@@ -6,6 +6,14 @@
     background-color: var(--white);
 }
 
+.green{
+    background-color: var(--green);
+}
+
+.bg-green{
+    background-color: var(--green);
+}    
+
 .black{
     color: var(--black);
 }

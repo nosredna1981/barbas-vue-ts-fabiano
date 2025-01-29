@@ -26,6 +26,13 @@
     border-radius: 8px;
     cursor: pointer;
 }
+.google button {
+    background-color: var(--green);
+    color: var(--white);
+    padding: 2% 2%;  
+    border-radius: 8px;
+    cursor: pointer;
+}
 
 .form-group button:hover {
     background-color: var(--yellow);
