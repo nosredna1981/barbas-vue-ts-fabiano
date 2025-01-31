@@ -26,6 +26,14 @@
             ></InputValue>
 
             <InputValue
+                v-model="person.telephone"
+                type="tel"
+                label="Telefone"
+                message="Telefone invalido"
+                :required="true"
+            ></InputValue>
+
+            <InputValue
                 v-model="person.password"
                 type="password"
                 label="Senha"
@@ -40,14 +48,6 @@
                 message="Senhas diferentes"
                 :required="true"
                 :validation="person.password == confPass"
-            ></InputValue>
-
-            <InputValue
-                v-model="person.telephone"
-                type="tel"
-                label="Telefone"
-                message="Telefone invalido"
-                :required="true"
             ></InputValue>
 
             <div class="my-3 form-group flex-row gap-2">

@@ -6,7 +6,8 @@ import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     signInWithPopup, 
-    GoogleAuthProvider
+    GoogleAuthProvider,
+    signOut
 } from "firebase/auth";
 
 export const auth = getAuth(app);
@@ -26,4 +27,9 @@ export function postLoginEmail(email: string, password: string) {
 export function getLoginGoogle() {
     const provider = new GoogleAuthProvider();
     return signInWithPopup(auth, provider);
+}
+
+export function getLogoff() {
+   return signOut(auth)
+        
 }
