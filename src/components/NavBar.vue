@@ -1,5 +1,8 @@
 <template>
-    <nav class="navbar navbar-expand-lg fixed-top">
+    <nav
+        class="navbar navbar-expand-lg fixed-top"
+        @mousemove="updateDataAuth()"
+    >
         <div class="container">
             <!-- <a class="navbar-brand" href="#">Navbar</a> -->
             <img
@@ -41,9 +44,12 @@
 
                 <ul v-if="person" class="navbar-nav">
                     <li class="nav-item">
-                        <RouterLink class="nav-link" to="/login">{{
-                            person.name ?? person.email
-                        }}</RouterLink>
+                        <RouterLink
+                            class="nav-link"
+                            :to="`/profile/${person?.id}`"
+                        >
+                            {{ person?.name ?? person?.email }}</RouterLink
+                        >
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" @click="sendLogoff()">Sair</a>
@@ -66,23 +72,34 @@
 import { Person } from "@/core/domain/Person";
 import { authService } from "@/core/service/auth.service";
 import router from "@/router";
-import { computed, ref } from "vue";
+import { ref } from "vue";
 
-// const person = ref<Person>();
-// person.value = authService.getAuthUser();
+const person = ref<Person | undefined>();
 
-const person = computed(() => authService.getAuthUser());
+let times = 0;
+
+function updateDataAuth() {
+    clearTimeout(times);
+    times = setTimeout(() => {
+        person.value = authService.getAuthUser();
+    }, 500);
+}
 
 function sendLogoff() {
     authService
         .logoff()
         .then(() => {
+            updateDataAuth();
             router.push("/");
         })
         .catch(() => {
             alert("Não foi Possível Sair");
         });
 }
+
+router.beforeEach(() => {
+    updateDataAuth();
+});
 </script>
 
 <style scoped>

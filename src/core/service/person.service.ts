@@ -1,8 +1,9 @@
 import { Person } from "../domain/Person";
-import { addPerson } from "../infra/person.repository";
+import { addPerson, getPerson } from "../infra/person.repository";
 
 export const personService = {
     add,
+    get,
 };
 
 function add(person: Person) {
@@ -20,3 +21,10 @@ function add(person: Person) {
             alert("Error ao adicionar o usuário");
         });
 }
+
+async function get(id: string) {
+    if (!id) throw new Error(" Dados incompletos");
+    return await getPerson(id);
+}
+
+
